@@ -162,11 +162,7 @@ public class WDLPluginChannels {
 	 * Checks whether players can use functions unknown to the server.
 	 */
 	public static boolean canUseFunctionsUnknownToServer() {
-		if (receivedPackets.contains(0)) {
-			return canUseFunctionsUnknownToServer;
-		} else {
-			return true;
-		}
+		return true;
 	}
 	
 	/**
@@ -175,11 +171,7 @@ public class WDLPluginChannels {
 	 * overridden.
 	 */
 	public static boolean canDownloadAtAll() {
-		if (hasChunkOverrides()) {
-			return true;
-		} else {
-			return canDownloadInGeneral();
-		}
+		return true;
 	}
 	
 	/**
@@ -187,11 +179,7 @@ public class WDLPluginChannels {
 	 * overridden chunks).
 	 */
 	public static boolean canDownloadInGeneral() {
-		if (receivedPackets.contains(1)) {
-			return canDownloadInGeneral;
-		} else {
-			return canUseFunctionsUnknownToServer();
-		}
+		return true;
 	}
 	
 	/**
@@ -199,157 +187,77 @@ public class WDLPluginChannels {
 	 * (and chunk caching is disabled).
 	 */
 	public static boolean canSaveChunk(Chunk chunk) {
-		if (isChunkOverridden(chunk)) {
-			return true;
-		}
-		
-		if (!canDownloadInGeneral()) {
-			return false;
-		}
-		
-		if (receivedPackets.contains(1)) {
-			if (!canCacheChunks && saveRadius >= 0) {
-				int distanceX = chunk.xPosition - WDL.thePlayer.chunkCoordX;
-				int distanceZ = chunk.zPosition - WDL.thePlayer.chunkCoordZ;
-				
-				if (Math.abs(distanceX) > saveRadius ||
-						Math.abs(distanceZ) > saveRadius) {
-					return false;
-				}
-			}
-			
-			return true;
-		} else {
-			return canUseFunctionsUnknownToServer();
-		}
+		return true;
 	}
 	
 	/**
 	 * Checks whether entities are allowed to be saved.
 	 */
 	public static boolean canSaveEntities() {
-		if (!canDownloadInGeneral()) {
-			return false;
-		}
-		
-		if (receivedPackets.contains(1)) {
-			return canSaveEntities;
-		} else {
-			return canUseFunctionsUnknownToServer();
-		}
+		return true;
 	}
 	
 	/**
 	 * Checks whether entities are allowed to be saved in the given chunk.
 	 */
 	public static boolean canSaveEntities(Chunk chunk) {
-		if (isChunkOverridden(chunk)) {
-			return true;
-		}
-		
-		return canSaveEntities();
+		return true;
 	}
 	
 	/**
 	 * Checks whether entities are allowed to be saved in the given chunk.
 	 */
 	public static boolean canSaveEntities(int chunkX, int chunkZ) {
-		if (isChunkOverridden(chunkX, chunkZ)) {
-			return true;
-		}
-		
-		return canSaveEntities();
+		return true;
 	}
 	
 	/**
 	 * Checks whether a player can save tile entities.
 	 */
 	public static boolean canSaveTileEntities() {
-		if (!canDownloadInGeneral()) {
-			return false;
-		}
-		
-		if (receivedPackets.contains(1)) {
-			return canSaveTileEntities;
-		} else {
-			return canUseFunctionsUnknownToServer();
-		}
+		return true;
 	}
 	
 	/**
 	 * Checks whether a player can save tile entities in the given chunk.
 	 */
 	public static boolean canSaveTileEntities(Chunk chunk) {
-		if (isChunkOverridden(chunk)) {
-			return true;
-		}
-		
-		return canSaveTileEntities();
+		return true;
 	}
 	
 	/**
 	 * Checks whether a player can save tile entities in the given chunk.
 	 */
 	public static boolean canSaveTileEntities(int chunkX, int chunkZ) {
-		if (isChunkOverridden(chunkX, chunkZ)) {
-			return true;
-		}
-		
-		return canSaveTileEntities();
+		return true;
 	}
 	
 	/**
 	 * Checks whether containers (such as chests) can be saved.
 	 */
 	public static boolean canSaveContainers() {
-		if (!canDownloadInGeneral()) {
-			return false; 
-		}
-		if (!canSaveTileEntities()) {
-			return false;
-		}
-		if (receivedPackets.contains(1)) {
-			return canSaveContainers;
-		} else {
-			return canUseFunctionsUnknownToServer();
-		}
+		return true;
 	}
 	
 	/**
 	 * Checks whether containers (such as chests) can be saved.
 	 */
 	public static boolean canSaveContainers(Chunk chunk) {
-		if (isChunkOverridden(chunk)) {
-			return true;
-		}
-		
-		return canSaveContainers();
+		return true;
 	}
 	
 	/**
 	 * Checks whether containers (such as chests) can be saved.
 	 */
 	public static boolean canSaveContainers(int chunkX, int chunkZ) {
-		if (isChunkOverridden(chunkX, chunkZ)) {
-			return true;
-		}
-		
-		return canSaveContainers();
+		return true;
 	}
 	
 	/**
 	 * Checks whether maps (the map item, not the world itself) can be saved.
 	 */
 	public static boolean canSaveMaps() {
-		if (!canDownloadInGeneral()) {
-			return false; 
-		}
-		//TODO: Better value than 'canSaveTileEntities'.
-		if (receivedPackets.contains(1)) {
-			return canSaveTileEntities;
-		} else {
-			return canUseFunctionsUnknownToServer();
-		}
+		return true;
 	}
 	
 	/**
